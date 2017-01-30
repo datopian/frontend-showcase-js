@@ -1,10 +1,11 @@
 import * as actionTypes from "../constants/actionTypes";
-import PublisherPageApi from "../api/publisherPageApi";
+import * as api from '../api';
+
 
 export function getAllPackageForPublisherSuccess(packages) {
   return {
     type: actionTypes.FETCH_PACKAGES_SUCCESS,
-    packages: packages.data
+    packages: packages.items
   };
 }
 
@@ -17,23 +18,21 @@ export function getPublisherDetailsSuccess(details) {
 
 export function getAllPackageForPublisher(publisherName) {
   return dispatch => {
-    return PublisherPageApi.getAllPackages(publisherName).then(packages => {
-      dispatch(getAllPackageForPublisherSuccess(packages));
+    return api.getPackagesOfPublisher(publisherName).then(response => {
+      dispatch(getAllPackageForPublisherSuccess(response.data));
     }).catch(error => {
       throw(error);
     });
-    // .then(result => dispatch(getAllPackageForPublisherSuccess(result.data)));
   };
 }
 
 export function getPublisherDetails(publisherName) {
   return dispatch => {
-    return PublisherPageApi.getPublisherDetails(publisherName).then(details => {
-      dispatch(getPublisherDetailsSuccess(details));
+    return api.getPublisherDetails(publisherName).then(response => {
+      dispatch(getPublisherDetailsSuccess(response.data));
     }).catch(error => {
       throw(error);
     });
-    // .then(result => dispatch(getAllPackageForPublisherSuccess(result.data)));
   };
 }
 
