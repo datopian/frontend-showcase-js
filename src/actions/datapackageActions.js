@@ -1,5 +1,5 @@
 import * as actionTypes from "../constants/actionTypes";
-import DataPackagePageApi from "../api/dataPackagePageApi";
+import * as api from '../api';
 import jts from "jsontableschema";
 const Datapackage = require('datapackage-test').Datapackage;
 
@@ -20,7 +20,7 @@ export function receiveResource(resources) {
 
 export function getDataPackage(publisher, packageName) {
   return async dispatch => {
-    return DataPackagePageApi.getPackageMetadata(publisher, packageName)
+    return api.getPackageMetadata(publisher, packageName)
       .then(async (result) => {
         let data = result.data;
 

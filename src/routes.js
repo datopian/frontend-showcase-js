@@ -1,7 +1,7 @@
 import React from "react";
 import {Route, IndexRoute} from "react-router";
 import NotFoundPage from "./components/NotFoundPage";
-import HomePage from "./components/HomePage";
+import HomePage from "./components/homePage/HomePage";
 import DataPackageViewContainer from "./containers/DataPackageView"; // eslint-disable-line
 import App from "./containers/App";
 import PublisherDetailsPage from "./containers/PublisherDetailsPage";
