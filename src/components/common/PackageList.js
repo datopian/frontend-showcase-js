@@ -3,6 +3,7 @@ import PackageListItem from "./PackageListItem";
 import {Col, Row, Button} from "react-bootstrap";
 
 const PackageList = ({publisherName, packageList}) => {
+  debugger;
   let l = packageList.length;
   return (
     <Col sm={5} className="offset-sm-2">
@@ -30,8 +31,8 @@ const PackageList = ({publisherName, packageList}) => {
             <PackageListItem key={publisherName + "::" + packageItem.name}
                              name={packageItem.name}
                              publisherName={publisherName}
-                             description={packageItem.description}
-                             title={packageItem.title}/>
+                             description={packageItem.readme.substring(0, 50)}
+                             title={packageItem.descriptor.title}/>
           ) : ''
       }
     </Col>
