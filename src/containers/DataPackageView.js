@@ -63,10 +63,6 @@ export class DataPackageView extends React.Component {
     );
   }
 }
-//<div className="col-lg-10">
-//  <DataPackagePanel specs={this.state.specs} />
-//  <ReactMarkdown source={this.props.readme} />
-//</div>
 
 DataPackageView.propTypes = {
   packageName: PropTypes.string.isRequired,
