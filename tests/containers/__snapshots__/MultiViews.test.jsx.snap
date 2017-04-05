@@ -30,7 +30,7 @@ exports[`MultiViews Container should render 2 PlotlyChart components and 1 VegaC
     layout={
       Object {
         "height": 450,
-        "title": "demo-resource",
+        "title": "",
         "xaxis": Object {
           "title": "Date",
         },
@@ -67,7 +67,7 @@ exports[`MultiViews Container should render 2 PlotlyChart components and 1 VegaC
     layout={
       Object {
         "height": 450,
-        "title": "demo-resource",
+        "title": "",
         "xaxis": Object {
           "title": "Date",
         },
