@@ -24,16 +24,16 @@ export class MultiViews extends React.Component {
         if (view.type == 'Graph') { // it's a recline view
           view = dprender.convertReclineToSimple(view)
         }
+        let compiledView = dprender.compileView(view, dp)
         switch (view.specType) {
           case 'simple': // convert to plotly then render
-            let compiledView = dprender.compileView(view, dp)
             let spec = {}
             if(compiledView.resources[0]._values) {
               spec = dprender.simpleToPlotly(compiledView)
             }
             return <PlotlyChart data={spec.data} layout={spec.layout} idx={idx} key={idx} />
           case 'vega': // render VegaChart
-            let vegaSpec = dprender.compileVegaData(view.spec, dp)
+            let vegaSpec = dprender.vegaToVega(compiledView)
             return <VegaChart spec={vegaSpec} idx={idx} key={idx} />
         }
       })
