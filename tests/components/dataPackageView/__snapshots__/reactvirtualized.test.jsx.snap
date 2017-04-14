@@ -1,7 +1,9 @@
 exports[`ReactVirtualized component should match the snapshot - with data 1`] = `
 <Table
+  className="table"
   disableHeader={false}
   estimatedRowSize={30}
+  headerClassName="rv-header"
   headerHeight={20}
   headerRowRenderer={[Function]}
   headerStyle={Object {}}
@@ -55,8 +57,10 @@ exports[`ReactVirtualized component should match the snapshot - with data 1`] = 
 
 exports[`ReactVirtualized component should match the snapshot - without data 1`] = `
 <Table
+  className="table"
   disableHeader={false}
   estimatedRowSize={30}
+  headerClassName="rv-header"
   headerHeight={20}
   headerRowRenderer={[Function]}
   headerStyle={Object {}}

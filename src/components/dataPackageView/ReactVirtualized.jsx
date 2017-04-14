@@ -41,6 +41,8 @@ class ReactVirtualized extends React.Component {
     })
     return (
       <Table
+        className="table"
+        headerClassName="rv-header"
         width={this.state.width}
         height={this.state.height}
         headerHeight={this.state.headerHeight}
