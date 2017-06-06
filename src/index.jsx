@@ -37,6 +37,7 @@ async function fetchDataPackageAndDataIncrementally(dataPackageIdentifier, divEl
 
   await Promise.all(dpObj.resources.map(async (resource, idx) => {
     resource.descriptor._values = await dputils.fetchDataOnly(resource)
+    resource.descriptor._values = dprender.normalizeDateAndTime(resource.descriptor)._values
     divElements.forEach(exports.renderComponentInElement)
   }))
 
