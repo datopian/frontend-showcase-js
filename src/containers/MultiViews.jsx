@@ -87,11 +87,22 @@ export class MultiViews extends React.Component {
 
           return (
             <div>
-              <div className="highlights">
-                <div className="global">{"GLOBAL CO₂ LEVEL: " + lastValue.value}</div>
-                <div className="change">{"Change: " + (firstValue.value - lastValue.value)}</div>
-                <div className="change-in-percentage">{"Change (%): " + ((firstValue.value - lastValue.value)/firstValue.value)}</div>
-              </div>
+              <div class="tab-border" style={{ display: 'none' }}>
+                    <div class="row ">
+                        <div class="col-sm-4  text-center">
+                            <h2 id="global">{lastValue.value || lastValue[1]}</h2>
+                            <h4>{"GLOBAL CO₂ LEVEL"}</h4>
+                        </div>
+                        <div class="col-sm-4  text-center">
+                            <h2 id="change">{(firstValue.value - lastValue.value).toFixed(2)}</h2>
+                            <h4>{"CHANGE"}</h4>
+                        </div>
+                        <div class="col-sm-4  text-center">
+                            <h2 id="change-in-percentage">{((firstValue.value - lastValue.value)/firstValue.value).toFixed(2)}</h2>
+                            <h4>{"CHANGE (%)"}</h4>
+                        </div>
+                    </div>
+                </div>
               {readyView}
               <div className="datahub-meta">
                 <a className="dataset-name" href={pathToDataset} target="_blank">
