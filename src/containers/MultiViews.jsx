@@ -98,7 +98,7 @@ export class MultiViews extends React.Component {
                             <h4>{"CHANGE"}</h4>
                         </div>
                         <div class="col-sm-4  text-center">
-                            <h2 id="change-in-percentage">{((lastValue.value - firstValue.value)/firstValue.value).toFixed(2)}</h2>
+                            <h2 id="change-in-percentage">{((lastValue.value - firstValue.value)/firstValue.value*100).toFixed(2)}</h2>
                             <h4>{"CHANGE (%)"}</h4>
                         </div>
                     </div>
