@@ -94,11 +94,11 @@ export class MultiViews extends React.Component {
                             <h4>{"GLOBAL CO₂ LEVEL"}</h4>
                         </div>
                         <div class="col-sm-4  text-center">
-                            <h2 id="change">{(firstValue.value - lastValue.value).toFixed(2)}</h2>
+                            <h2 id="change">{(lastValue.value - firstValue.value).toFixed(2)}</h2>
                             <h4>{"CHANGE"}</h4>
                         </div>
                         <div class="col-sm-4  text-center">
-                            <h2 id="change-in-percentage">{((firstValue.value - lastValue.value)/firstValue.value).toFixed(2)}</h2>
+                            <h2 id="change-in-percentage">{((lastValue.value - firstValue.value)/firstValue.value).toFixed(2)}</h2>
                             <h4>{"CHANGE (%)"}</h4>
                         </div>
                     </div>
