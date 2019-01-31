@@ -26,7 +26,18 @@ import * as dprender from 'datapackage-render'
 
 let dpObj
 
-let divElements = document.querySelectorAll('.react-me')
+const divElements = document.querySelectorAll('.react-me')
+const divElementsForViews = []
+const divElementsForPreviews = []
+const normalViews = []
+const previewViews = []
+divElements.forEach(element => {
+  if (element.dataset.type === 'data-views') {
+    divElementsForViews.push(element)
+  } else if (element.dataset.type === 'resource-preview') {
+    divElementsForPreviews.push(element)
+  }
+})
 
 fetchDpAndResourcesAndRenderViews(DP_ID, divElements)
 
@@ -41,8 +52,6 @@ async function fetchDpAndResourcesAndRenderViews(dataPackageIdentifier, divEleme
 
   dpObj.descriptor.resources = dpObj.resources.map(resource => resource.descriptor)
   // Split out normal and preview views
-  const normalViews = []
-  const previewViews = []
   if (dpObj.descriptor.views) {
     dpObj.descriptor.views.forEach(view => {
       if (!view.datahub) {
@@ -86,7 +95,7 @@ async function fetchDpAndResourcesAndRenderViews(dataPackageIdentifier, divEleme
           previewResourceFound = true
           res = await Resource.load(res)
           res.descriptor._values = await dputils.fetchDataOnly(res)
-          renderView(view, res.descriptor, idx+1, dpObj.descriptor) // We're using "idx+1" as "divElements" object contains all "react-me" elements
+          renderView(view, res.descriptor, idx, dpObj.descriptor)
         }
       })
     }
@@ -111,26 +120,35 @@ async function fetchDpAndResourcesAndRenderViews(dataPackageIdentifier, divEleme
       renderView('view', dpObj.resources[idx].descriptor, null, dpObj.descriptor)
     }
     if (resourcesForPreviewViews.includes(idx)) {
-      renderView('preview', dpObj.resources[idx].descriptor, idx+1, dpObj.descriptor)
+      renderView('preview', dpObj.resources[idx].descriptor, idx, dpObj.descriptor)
     }
   }))
 }
 
 function renderView (view, resource, idx, dp) {
   if (view === 'preview' || (view.datahub && view.datahub.type === 'preview')) {
-    const el = divElements[idx]
     if (resource.format === 'geojson') {
-      ReactDOM.render(<LeafletMap featureCollection={resource._values} idx={idx} />, el)
+      ReactDOM.render(<LeafletMap featureCollection={resource._values} idx={idx} />, divElementsForPreviews[idx])
     } else if (resource.format !== 'topojson') {
       let compiledViewSpec = {
         resources: [resource],
         specType: 'handsontable'
       }
       let spec = dprender.handsOnTableToHandsOnTable(compiledViewSpec)
-      ReactDOM.render(<HandsOnTable spec={spec} idx={idx} />, el);
+      ReactDOM.render(<HandsOnTable spec={spec} idx={idx} />, divElementsForPreviews[idx]);
     }
   } else {
-    ReactDOM.render(<MultiViews dataPackage={dp} />, divElements[0])
+    if (divElementsForViews.length > 1) {
+      // Render each view in a specific div element. A view index should be
+      // equal to div element index:
+      normalViews.forEach((view, index) => {
+        dp.views = [view].concat(previewViews)
+        ReactDOM.render(<MultiViews dataPackage={dp} idx={index} />, divElementsForViews[index])
+      })
+    } else {
+      // We'll render all graphs in the single div element:
+      ReactDOM.render(<MultiViews dataPackage={dp} />, divElementsForViews[0])
+    }
   }
 }
 

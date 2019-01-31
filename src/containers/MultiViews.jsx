@@ -16,7 +16,8 @@ export class MultiViews extends React.Component {
     this.state = {
       // we stub some basic fields to ensure render works ...
       dataPackage: this.props.dataPackage,
-      hoverText: 'Copy to clipboard'
+      hoverText: 'Copy to clipboard',
+      index: this.props.idx
     }
   }
 
@@ -44,7 +45,9 @@ export class MultiViews extends React.Component {
             view = dprender.convertReclineToSimple(view)
           }
           let compiledView = dprender.compileView(view, dp)
-          let readyView, firstValue, lastValue
+          let readyView
+          let firstValue = {}
+          let lastValue = {}
           switch (view.specType) {
             case 'simple': // convert to plotly then render
               let spec = {}
@@ -53,15 +56,15 @@ export class MultiViews extends React.Component {
                 firstValue = compiledView.resources[0]._values[0]
                 lastValue = compiledView.resources[0]._values[compiledView.resources[0]._values.length-1]
               }
-              readyView = <PlotlyChart data={spec.data} layout={spec.layout} idx={idx} key={idx} />
+              readyView = <PlotlyChart data={spec.data} layout={spec.layout} idx={this.state.index || idx} key={idx} />
               break
             case 'vega': // render VegaChart
               let vegaSpec = dprender.vegaToVega(compiledView)
-              readyView = <VegaChart spec={vegaSpec} idx={idx} key={idx} />
+              readyView = <VegaChart spec={vegaSpec} idx={this.state.index || idx} key={idx} />
               break
             case 'table': // render handsontable
               let htSpec = dprender.handsOnTableToHandsOnTable(compiledView)
-              return <HandsOnTable spec={htSpec} idx={idx + 'v'} key={idx} />
+              return <HandsOnTable spec={htSpec} idx={this.state.index + 'v' || idx + 'v'} key={idx} />
           }
           const windowHref = window.location.href
           const windowHrefParts = urllib.parse(windowHref)
@@ -87,17 +90,17 @@ export class MultiViews extends React.Component {
 
           return (
             <div>
-              <div class="tab-border" style={{ display: 'none' }}>
-                    <div class="row ">
-                        <div class="col-sm-4  text-center">
+              <div className="tab-border" style={{ display: 'none' }}>
+                    <div className="row ">
+                        <div className="col-sm-4  text-center">
                             <h2 id="global">{lastValue.value || lastValue[1]}</h2>
                             <h4>{"GLOBAL CO₂ LEVEL"}</h4>
                         </div>
-                        <div class="col-sm-4  text-center">
+                        <div className="col-sm-4  text-center">
                             <h2 id="change">{(lastValue.value - firstValue.value).toFixed(2)}</h2>
                             <h4>{"CHANGE"}</h4>
                         </div>
-                        <div class="col-sm-4  text-center">
+                        <div className="col-sm-4  text-center">
                             <h2 id="change-in-percentage">{((lastValue.value - firstValue.value)/firstValue.value*100).toFixed(2)}</h2>
                             <h4>{"CHANGE (%)"}</h4>
                         </div>
