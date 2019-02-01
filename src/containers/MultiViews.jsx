@@ -48,13 +48,15 @@ export class MultiViews extends React.Component {
           let readyView
           let firstValue = {}
           let lastValue = {}
+          if(compiledView.resources[0]._values) {
+            firstValue = compiledView.resources[0]._values[0]
+            lastValue = compiledView.resources[0]._values[compiledView.resources[0]._values.length-1]
+          }
           switch (view.specType) {
             case 'simple': // convert to plotly then render
               let spec = {}
               if(compiledView.resources[0]._values) {
                 spec = dprender.simpleToPlotly(compiledView)
-                firstValue = compiledView.resources[0]._values[0]
-                lastValue = compiledView.resources[0]._values[compiledView.resources[0]._values.length-1]
               }
               readyView = <PlotlyChart data={spec.data} layout={spec.layout} idx={this.state.index || idx} key={idx} />
               break
