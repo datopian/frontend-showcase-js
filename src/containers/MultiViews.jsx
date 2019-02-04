@@ -53,7 +53,7 @@ export class MultiViews extends React.Component {
           if(compiledView.resources[0]._values) {
             firstValue = compiledView.resources[0]._values[0]
             lastValue = compiledView.resources[0]._values[compiledView.resources[0]._values.length-1]
-            change = (lastValue.value || lastValue[1] - (firstValue.value || firstValue[1])).toFixed(2)
+            change = ((lastValue.value || lastValue[1]) - (firstValue.value || firstValue[1])).toFixed(2)
             changeInPercentage = (change / (firstValue.value || firstValue[1]) * 100).toFixed(2)
           }
           switch (view.specType) {
