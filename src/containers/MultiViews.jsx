@@ -48,9 +48,13 @@ export class MultiViews extends React.Component {
           let readyView
           let firstValue = {}
           let lastValue = {}
+          let change, changeInPercentage
+          let period = typeof(PERIOD) === 'undefined' ? 'CHANGE' : PERIOD
           if(compiledView.resources[0]._values) {
             firstValue = compiledView.resources[0]._values[0]
             lastValue = compiledView.resources[0]._values[compiledView.resources[0]._values.length-1]
+            change = (lastValue.value || lastValue[1] - (firstValue.value || firstValue[1])).toFixed(2)
+            changeInPercentage = (change / (firstValue.value || firstValue[1]) * 100).toFixed(2)
           }
           switch (view.specType) {
             case 'simple': // convert to plotly then render
@@ -99,12 +103,12 @@ export class MultiViews extends React.Component {
                             <h4>{"GLOBAL CO₂ LEVEL"}</h4>
                         </div>
                         <div className="col-sm-4  text-center">
-                            <h2 id="change">{(lastValue.value - firstValue.value).toFixed(2)}</h2>
-                            <h4>{"CHANGE"}</h4>
+                            <h2 id="change">{change}</h2>
+                            <h4>{period}</h4>
                         </div>
                         <div className="col-sm-4  text-center">
-                            <h2 id="change-in-percentage">{((lastValue.value - firstValue.value)/firstValue.value*100).toFixed(2)}</h2>
-                            <h4>{"CHANGE (%)"}</h4>
+                            <h2 id="change-in-percentage">{changeInPercentage + '%'}</h2>
+                            <h4>{period + " (%)"}</h4>
                         </div>
                     </div>
                 </div>
