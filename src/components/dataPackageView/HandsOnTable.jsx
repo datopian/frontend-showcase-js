@@ -70,7 +70,7 @@ class HandsOnTable extends React.Component {
         <div className="share-and-embed">
 
           <span className="copy-text">Share:</span>
-          <input value={sharedUrl} className="copy-input" />
+          <input value={sharedUrl} className="copy-input" readOnly />
           <ReactHover options={optionsCursorTrueWithMargin}>
             <ReactHover.Trigger type='trigger'>
               <CopyToClipboard text={sharedUrl}
@@ -86,7 +86,7 @@ class HandsOnTable extends React.Component {
           </ReactHover>
 
           <span className="copy-text">Embed:</span>
-          <input value={iframe} className="copy-input" />
+          <input value={iframe} className="copy-input" readOnly />
           <ReactHover options={optionsCursorTrueWithMargin}>
             <ReactHover.Trigger type='trigger'>
               <CopyToClipboard text={iframe}
