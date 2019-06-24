@@ -85,7 +85,7 @@ async function fetchDpAndResourcesAndRenderViews(dataPackageIdentifier, divEleme
         if (res.datahub.type === 'derived/preview') {
           previewResourceFound = true
           res = await Resource.load(res)
-          res.descriptor._values = await dputils.fetchDataOnly(res)
+          res.descriptor._values = await dputils.fetchDataOnly(res, {basePath})
           renderView(view, res.descriptor, idx+1, dpObj.descriptor) // We're using "idx+1" as "divElements" object contains all "react-me" elements
         }
       })
@@ -106,7 +106,7 @@ async function fetchDpAndResourcesAndRenderViews(dataPackageIdentifier, divEleme
   requiredResources = [...new Set(requiredResources)] // Unique values
   // Load required resources and render views
   await Promise.all(requiredResources.map(async idx => {
-    dpObj.resources[idx].descriptor._values = await dputils.fetchDataOnly(dpObj.resources[idx])
+    dpObj.resources[idx].descriptor._values = await dputils.fetchDataOnly(dpObj.resources[idx], {basePath})
     if (resourcesForNormalViews.includes(idx)) {
       renderView('view', dpObj.resources[idx].descriptor, null, dpObj.descriptor)
     }
